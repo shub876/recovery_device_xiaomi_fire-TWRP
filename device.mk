@@ -63,7 +63,13 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock.recovery \
     fastbootd
 
-# Additional binaries & libraries needed for recovery
+# API
+PRODUCT_SHIPPING_API_LEVEL := 33
+
+# VNDK
+PRODUCT_TARGET_VNDK_VERSION := 33
+
+# Additional Libraries
 TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster4 \
     libkeymaster41 \
