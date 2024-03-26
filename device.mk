@@ -41,6 +41,10 @@ PRODUCT_PACKAGES_DEBUG += \
     bootctrl.mt6768 \
     bootctrl.mt6768.recovery
 
+PRODUCT_PACKAGES += \
+    create_pl_dev \
+    create_pl_dev.recovery
+
 # MTK PlPath Utils
 PRODUCT_PACKAGES += \
     mtk_plpath_utils.recovery
