@@ -75,7 +75,7 @@
     {
       "Name": "FreezerState",
       "Controller": "freezer",
-      "File": "cgroup.freeze"
+      "File": "frozen/freezer.state"
     }
   ],
 
@@ -94,27 +94,27 @@
       ]
     },
     {
-      "Name": "Frozen",
+      "Name": "FreezerFrozen",
       "Actions": [
         {
           "Name": "SetAttribute",
           "Params":
           {
             "Name": "FreezerState",
-            "Value": "1"
+            "Value": "FROZEN"
           }
         }
       ]
     },
     {
-      "Name": "Unfrozen",
+      "Name": "FreezerThawed",
       "Actions": [
         {
           "Name": "SetAttribute",
           "Params":
           {
             "Name": "FreezerState",
-            "Value": "0"
+            "Value": "THAWED"
           }
         }
       ]
@@ -128,6 +128,32 @@
           {
             "Controller": "cpu",
             "Path": "system"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Frozen",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "freezer",
+            "Path": "frozen"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Unfrozen",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "freezer",
+            "Path": ""
           }
         }
       ]
@@ -171,21 +197,6 @@
         }
       ]
     },
-// MIUI ADD: Performance_SpeedUI
-    {
-      "Name": "UiPerformance",
-      "Actions": [
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "cpu",
-            "Path": "ui"
-          }
-        }
-      ]
-    },
-// END Performance_SpeedUI
     {
       "Name": "RealtimePerformance",
       "Actions": [
@@ -448,21 +459,7 @@
         }
       ]
     },
-// MIUI ADD: Performance_SpeedUI
-    {
-      "Name": "ProcessCapacityUI",
-      "Actions": [
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "cpuset",
-            "Path": "ui"
-          }
-        }
-      ]
-    },
-// END Performance_SpeedUI
+
     {
       "Name": "ServiceCapacityLow",
       "Actions": [
@@ -690,22 +687,7 @@
           }
         }
       ]
-    },
-    // MIUI ADD: Performance_MemoryEnhance
-    {
-      "Name": "MemoryFreezeProcess",
-      "Actions": [
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "memory",
-            "Path": "freeze-app"
-          }
-        }
-      ]
     }
-    // END Performance_MemoryEnhance
   ],
 
   "AggregateProfiles": [
@@ -737,12 +719,6 @@
       "Name": "SCHED_SP_RT_APP",
       "Profiles": [ "RealtimePerformance", "MaxIoPriority", "TimerSlackNormal" ]
     },
-// MIUI ADD: Performance_SpeedUI
-    {
-      "Name": "SCHED_SP_UI",
-      "Profiles": [ "UiPerformance" ]
-    },
-// END Performance_SpeedUI
     {
       "Name": "CPUSET_SP_DEFAULT",
       "Profiles": [ "TimerSlackNormal" ]
@@ -790,13 +766,6 @@
     {
       "Name": "CPUSET_SP_CAMERA_LIMIT_BACKGROUND",
       "Profiles": [ "HighEnergySaving", "CameraProcessCapacityLowest", "LowIoPriority", "TimerSlackHigh" ]
-// MIUI MOD: Performance_SpeedUI
-//  }
-    },
-    {
-      "Name": "CPUSET_SP_UI",
-      "Profiles": [ "ProcessCapacityUI", "UiPerformance" ]
     }
-// END Performance_SpeedUI
   ]
 }
